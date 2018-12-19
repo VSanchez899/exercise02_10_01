@@ -3,6 +3,7 @@ session_start();
 require_once("inc_OnlineStoresDB.php");
 require_once("Class_OnlineStore.php");
 $storeID = "COFFEE";
+$storeInfo = array();
 if (class_exists("onlineStore")) {
     if (isset($_SESSION['currentStore'])) {
         echo"Unserializing object.<br>";
@@ -12,7 +13,10 @@ if (class_exists("onlineStore")) {
         $Store = new onlineStore();
     }
     $Store->setStoreID($storeID);
-    
+    $storeInfo = $Store->getStoreInformation();
+    // echo"<pre>\n";
+    // print_r($storeInfo);
+    // echo"</pre>\n";
 }
 else {
     $errorMsgs[] = "The <em>onlineStore</em> class is not available!";
@@ -26,6 +30,7 @@ else {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gourmet Coffee</title>
+    <link rel="stylesheet" type="text/css" href="<?php echo $storeInfo['cssFile'];?>">
 </head>
 <body>
     <h1>Gourmet Coffee</h1>
